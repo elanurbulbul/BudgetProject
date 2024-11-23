@@ -28,6 +28,7 @@ export default function HomePage() {
 
   return (
     <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+      
       <ThemeToggle />
 
       <header className="bg-blue-500 dark:bg-blue-800 text-white p-4">
