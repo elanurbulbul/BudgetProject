@@ -1,15 +1,17 @@
 "use client";
 import { useState } from "react";
 import { useBudget } from "../context/BudgetContext"; // BudgetContext'ten kategorileri almak için
+import ReportPage from "../components/ReportPage";
+import { jsPDF } from "jspdf"; // jsPDF'i içe aktar
+
 
 export default function TransactionsPage() {
-  const { categories, transactions, addTransaction } = useBudget();
+  const { categories, transactions, addTransaction, getCategoryWarning } = useBudget();
   const [description, setDescription] = useState(""); // Kategori açıklaması
   const [amount, setAmount] = useState("");
   const [type, setType] = useState("income");
   const [category, setCategory] = useState(""); // Kategori state
   const [date, setDate] = useState("");
-
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,9 +45,8 @@ export default function TransactionsPage() {
     .filter((t) => t.type === "expense")
     .reduce((sum, t) => sum + t.amount, 0);
 
-    
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white shadow rounded">
+    <div className="max-w-2xl mx-auto p-4 bg-white shadow rounded dark:bg-slate-700">
       <h2 className="text-2xl font-bold mb-4">Gelir/Gider Ekle</h2>
       <form onSubmit={handleSubmit} className="grid gap-4">
         <div>
@@ -111,7 +112,7 @@ export default function TransactionsPage() {
           Kaydet
         </button>
       </form>
-
+            <ReportPage/>
       <div className="mt-6">
         <h3 className="text-xl font-semibold">Toplam Gelir ve Gider</h3>
         <div className="grid grid-cols-2 gap-4 mt-2">
@@ -126,25 +127,52 @@ export default function TransactionsPage() {
         </div>
       </div>
 
-      <div className="mt-6">
-        <h3 className="text-xl font-semibold">Gelir/Gider Listesi</h3>
-        <ul className="mt-2">
-          {transactions.map((transaction, index) => (
-            <li key={index} className="border-b py-2">
-              <div className="flex justify-between">
-                <p>{transaction.description}</p>
-                <span
-                  className={`${
-                    transaction.type === "income" ? "text-green-500" : "text-red-500"
-                  } font-semibold`}
-                >
-                  {transaction.type === "income" ? "+" : "-"} {transaction.amount.toFixed(2)} ₺
-                </span>
-              </div>
-              <div className="text-sm text-gray-500">{transaction.date}</div>
-            </li>
-          ))}
-        </ul>
+      <div className="mt-10 flex space-x-10 justify-between">
+        {/* Gelir Listesi */}
+        <div className="w-1/2">
+          <h3 className="text-xl font-semibold">Gelir Listesi</h3>
+          <ul className="mt-2">
+            {transactions
+              .filter((transaction) => transaction.type === "income")
+              .map((transaction, index) => (
+                <li key={index} className="border-b py-2">
+                  <div className="flex justify-between">
+                    <p>{transaction.description}</p>
+                    <span className="text-green-500 font-semibold">
+                      + {transaction.amount.toFixed(2)} ₺
+                    </span>
+                  </div>
+                  <div className="text-sm text-gray-500">{transaction.date}</div>
+                </li>
+              ))}
+          </ul>
+        </div>
+
+        {/* Gider Listesi */}
+        <div className="w-1/2">
+          <h3 className="text-xl font-semibold">Gider Listesi</h3>
+          <ul className="mt-2">
+            {transactions
+              .filter((transaction) => transaction.type === "expense")
+              .map((transaction, index) => (
+                <li key={index} className="border-b py-2">
+                  <div className="flex justify-between">
+                    <p>{transaction.description}</p>
+                    <span className="text-red-500 font-semibold">
+                      - {transaction.amount.toFixed(2)} ₺
+                    </span>
+                  </div>
+                  <div className="text-sm text-gray-500">{transaction.date}</div>
+                  {/* Kategoriye özel %80 uyarısı */}
+                  {getCategoryWarning(transaction.description) && (
+                    <p className="text-yellow-500 text-sm mt-2">
+                      {getCategoryWarning(transaction.description)}
+                    </p>
+                  )}
+                </li>
+              ))}
+          </ul>
+        </div>
       </div>
     </div>
   );
