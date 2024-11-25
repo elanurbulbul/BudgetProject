@@ -8,7 +8,6 @@ export function ThemeProvider({ children }) {
   const [theme, setTheme] = useState("light");
 
   useEffect(() => {
-    // Kullanıcının daha önce seçtiği temayı kontrol et
     const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
     document.documentElement.classList.add(savedTheme);
@@ -22,7 +21,7 @@ export function ThemeProvider({ children }) {
     document.documentElement.classList.remove(theme);
     document.documentElement.classList.add(newTheme);
 
-    // Tercihi localStorage'a kaydet
+  
     localStorage.setItem("theme", newTheme);
   };
 

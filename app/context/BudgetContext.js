@@ -43,7 +43,7 @@ export const BudgetProvider = ({ children }) => {
   };
 
 
-  // Kategorilere göre giderlerin toplamını hesapla
+  // Kategorilere göre giderlerin toplamı
   const getCategoryExpenses = (category) => {
     return transactions
       .filter((t) => t.type === "expense" && t.category === category)

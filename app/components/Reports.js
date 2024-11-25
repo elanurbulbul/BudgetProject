@@ -42,7 +42,7 @@ export default function ReportPage() {
   }, [transactions]);
 
   const dataBar = {
-    labels: Object.keys(monthlyIncome), // Aylık veriler
+    labels: Object.keys(monthlyIncome), // Aylık 
     datasets: [
       {
         label: "Gelir",
@@ -73,7 +73,7 @@ export default function ReportPage() {
   };
   const optionsBar = {
     responsive: true,
-    maintainAspectRatio: false, // Grafik yüksekliğini kontrol etmek için false yapılır
+    maintainAspectRatio: false, 
     plugins: {
       legend: {
         position: "top",

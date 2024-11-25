@@ -1,3 +1,5 @@
+"use client"
+
 import { jsPDF } from "jspdf";
 
 export default function PDFFormat({ transactions, totalIncome, totalExpenses }) {
