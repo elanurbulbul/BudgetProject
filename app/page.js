@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import TransactionsPage from "./transactions/page"; // İşlem bileşeni
 import ThemeToggle from "./components/ThemeToggle";
+import Suggestions from "./components/Suggestions";
 
 export default function HomePage() {
   const [transactions, setTransactions] = useState([]);
@@ -28,17 +29,16 @@ export default function HomePage() {
 
   return (
     <div className="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-      
-      <ThemeToggle />
+      <header className="bg-blue-500 dark:bg-blue-800 text-white p-4 flex justify-between items-center">
+        <h1 className="text-xl font-bold">Kişisel Bütçe Takip Uygulaması</h1>
+        <ThemeToggle />
 
-      <header className="bg-blue-500 dark:bg-blue-800 text-white p-4">
-        <h1 className="text-lg font-bold">Kişisel Bütçe Takip Uygulaması</h1>
       </header>
 
-      <main className="p-4">
-        <div className="grid gap-4">
+      <main className="p-4 lg:max-w-100">
+        <div className="p-10">
           <TransactionsPage />
-
+          <Suggestions />
         </div>
       </main>
 

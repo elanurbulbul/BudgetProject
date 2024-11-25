@@ -71,24 +71,37 @@ export default function ReportPage() {
       },
     ],
   };
+  const optionsBar = {
+    responsive: true,
+    maintainAspectRatio: false, // Grafik yüksekliğini kontrol etmek için false yapılır
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      
+    },
+  };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white shadow rounded dark:bg-slate-700">
-      <h2 className="text-2xl font-bold mb-4">Gelir ve Gider Raporları</h2>
+    <div className="max-w-2xl mx-auto p-4 bg-white dark:bg-slate-700">
+    <h2 className="text-2xl text-center font-bold mb-4">Gelir ve Gider Raporları</h2>
 
-      <div className="grid gap-6">
-        {/* Çubuk Grafik - Gelir ve Gider Aylık Dağılımı */}
-        <div>
-          <h3 className="text-xl font-semibold mb-4">Aylık Gelir ve Gider Dağılımı</h3>
-          <Bar data={dataBar} />
-        </div>
-
-        {/* Pasta Grafik - Toplam Gelir ve Gider Dağılımı */}
-        <div>
-          <h3 className="text-xl font-semibold mb-4">Toplam Gelir ve Gider Dağılımı</h3>
-          <Pie data={dataPie} />
+    <div className="mt-10 flex flex-wrap gap-8 md:flex-row">
+      {/* Çubuk Grafik - Gelir ve Gider Aylık Dağılımı */}
+      <div className="flex-1 min-w-[300px] justify-between self-start">
+        <h3 className="text-xl font-semibold mb-4">Aylık Gelir ve Gider Dağılımı</h3>
+        <div style={{ height: "330px" }}>
+          <Bar data={dataBar} options={optionsBar} height={1000} />
         </div>
       </div>
+
+      {/* Pasta Grafik - Toplam Gelir ve Gider Dağılımı */}
+      <div className="flex-1 min-w-[300px]">
+        <h3 className="text-xl font-semibold mb-4">Toplam Gelir ve Gider Dağılımı</h3>
+        <Pie data={dataPie} />
+      </div>
     </div>
+  </div>
+  
   );
 }

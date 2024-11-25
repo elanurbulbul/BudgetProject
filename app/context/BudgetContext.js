@@ -15,7 +15,7 @@ export const BudgetProvider = ({ children }) => {
     "Diğer",
   ]);
 
-  // Kategori başına belirlenen bütçe limitleri
+  // bütçe 
   const categoryLimits = {
     "Gıda": 50,
     "Ulaşım": 50,
@@ -36,13 +36,20 @@ export const BudgetProvider = ({ children }) => {
     setTransactions(updatedTransactions);
     localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
   };
+  const deleteTransaction = (id) => {
+    const updatedTransactions = transactions.filter((t) => t.id !== id);
+    setTransactions(updatedTransactions);
+    localStorage.setItem("transactions", JSON.stringify(updatedTransactions));
+  };
+
 
   // Kategorilere göre giderlerin toplamını hesapla
   const getCategoryExpenses = (category) => {
     return transactions
-      .filter((t) => t.type === "expense" && t.description === category)
+      .filter((t) => t.type === "expense" && t.category === category)
       .reduce((sum, t) => sum + t.amount, 0);
   };
+  
 
   // Kategoriler için %80 limit kontrolü
   const getCategoryWarning = (category) => {
@@ -53,16 +60,43 @@ export const BudgetProvider = ({ children }) => {
     }
     return null;
   };
+  
+  const getSavingsSuggestions = () => {
+    const suggestions = [];
+  
+    categories.forEach((category) => {
+      const totalSpent = getCategoryExpenses(category);
+      const limit = categoryLimits[category];
+      if (totalSpent > limit) {
+        suggestions.push(
+          `${category} kategorisinde limitinizi aştınız. Gelecek ay bu kategoride daha az harcama yapmalısın..`
+        );
+      } else if (totalSpent > limit * 0.8) {
+        suggestions.push(
+          `${category} kategorisinde harcamalarınız limitin %80'ine ulaştı. Harcamalarınızı kontrol altında tutmaya çalışın.`
+        );
+      }
+    });
+  
+    if (suggestions.length === 0) {
+      suggestions.push("Harcamalarınız kontrol altında! Böyle devam edin.");
+    }
+  
+    return suggestions;
+  };
+  
 
   return (
     <BudgetContext.Provider
       value={{
         transactions,
         addTransaction,
+        deleteTransaction,
         categories,
         categoryLimits,
         getCategoryExpenses,
         getCategoryWarning,
+        getSavingsSuggestions
       }}
     >
       {children}

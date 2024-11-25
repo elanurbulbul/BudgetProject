@@ -8,7 +8,7 @@ export default function RootLayout({ children }) {
       <body className="bg-gray-100 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
         <ThemeProvider>
           <BudgetProvider>
-            <main className="p-4">{children}</main>
+            <main >{children}</main>
           </BudgetProvider>
         </ThemeProvider>
       </body>
