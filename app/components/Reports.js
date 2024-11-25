@@ -83,7 +83,7 @@ export default function ReportPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4 bg-white dark:bg-slate-700">
+    <div className="mt-10 max-w-2xl mx-auto p-4 bg-white dark:bg-slate-700">
     <h2 className="text-2xl text-center font-bold mb-4">Gelir ve Gider Raporları</h2>
 
     <div className="mt-10 flex flex-wrap gap-8 md:flex-row">

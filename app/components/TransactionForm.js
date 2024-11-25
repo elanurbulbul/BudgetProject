@@ -34,69 +34,73 @@ export default function TransactionForm({ categories, addTransaction }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-4">
-      <div>
-        <label className="block text-sm font-medium">Açıklama</label>
-        <input
-          type="text"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          className="w-full p-2 border rounded dark:bg-slate-400"
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Tutar</label>
-        <input
-          type="number"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="w-full p-2 border rounded dark:bg-slate-400"
-          required
-        />
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Tür</label>
-        <select
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          className="w-full p-2 border rounded dark:bg-slate-400"
-        >
-          <option value="income">Gelir</option>
-          <option value="expense">Gider</option>
-        </select>
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Kategori</label>
-        <select
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
-          className="w-full p-2 border rounded dark:bg-slate-400"
-          required
-        >
-          <option value="">Kategori Seç</option>
-          {categories.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div>
-        <label className="block text-sm font-medium">Tarih</label>
-        <input
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.value)}
-          className="w-full p-2 border rounded dark:bg-slate-400"
-        />
-      </div>
-      <button
-        type="submit"
-        className="w-full p-2 bg-slate-500 text-white rounded hover:bg-blue-600"
+    <form
+    onSubmit={handleSubmit}
+    className="flex flex-col items-center gap-4 mx-auto w-full max-w-lg p-6 bg-gray-100 rounded shadow-md dark:bg-gray-800"
+    >
+    <div className="w-full">
+      <label className="block text-md font-medium mb-1">Açıklama</label>
+      <input
+        type="text"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        className="w-full p-2 border rounded dark:bg-gray-400"
+        required
+      />
+    </div>
+    <div className="w-full">
+      <label className="block text-m font-medium mb-1">Tutar</label>
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+        className="w-full p-2 border rounded dark:bg-gray-400"
+        required
+      />
+    </div>
+    <div className="w-full">
+      <label className="block text-md font-medium mb-1">Tür</label>
+      <select
+        value={type}
+        onChange={(e) => setType(e.target.value)}
+        className="w-full p-2 border rounded dark:bg-gray-400"
       >
-        Kaydet
-      </button>
-    </form>
+        <option value="income">Gelir</option>
+        <option value="expense">Gider</option>
+      </select>
+    </div>
+    <div className="w-full">
+      <label className="block text-md font-medium mb-1">Kategori</label>
+      <select
+        value={category}
+        onChange={(e) => setCategory(e.target.value)}
+        className="w-full p-2 border rounded dark:bg-gray-400"
+        required
+      >
+        <option value="">Kategori Seç</option>
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
+            {cat}
+          </option>
+        ))}
+      </select>
+    </div>
+    <div className="w-full">
+      <label className="block text-md font-medium mb-1">Tarih</label>
+      <input
+        type="date"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        className="w-full p-2 border rounded dark:bg-gray-400"
+      />
+    </div>
+    <button
+      type="submit"
+      className="px-6 py-2 mt-4 bg-blue-500 text-white rounded hover:bg-blue-600"
+    >
+      Kaydet
+    </button>
+  </form>
+  
   );
 }
